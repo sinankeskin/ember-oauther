@@ -11,16 +11,20 @@ export default class Oauth2CodeSignInRoute extends Route {
   oauther;
 
   queryParams = {
-    state: '',
     code: '',
+    state: '',
     scope: '',
+    provider: '',
   };
 
   getAccessToken(params) {
-    assert('Please set a providerName.', isPresent(this.providerName));
+    assert(
+      'Please set a provider name in params.provider.',
+      isPresent(params.provider)
+    );
 
     return this.oauther
-      .exchangeAccessToken(this.providerName, params.code)
+      .exchangeAccessToken(params.provider, params.code)
       .then((response) => {
         if (response.ok) {
           return response.json().then((data) => {
@@ -36,12 +40,15 @@ export default class Oauth2CodeSignInRoute extends Route {
   }
 
   getUserInformation(params) {
-    assert('Please set a providerName.', isPresent(this.providerName));
+    assert(
+      'Please set a provider name in params.provider.',
+      isPresent(params.provider)
+    );
 
     return this.getAccessToken(params)
       .then((accessToken) => {
         return this.oauther
-          .exchangeUserInformation(this.providerName, accessToken)
+          .exchangeUserInformation(params.provider, accessToken)
           .then((response) => {
             if (response.ok) {
               return response.json().then((data) => {

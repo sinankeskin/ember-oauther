@@ -13,14 +13,18 @@ export default class Oauth1SignInRoute extends Route {
   queryParams = {
     oauth_token: '',
     oauth_verifier: '',
+    provider: '',
   };
 
   getAccessToken(params) {
-    assert('Please set a providerName.', isPresent(this.providerName));
+    assert(
+      'Please set a provider name in params.provider.',
+      isPresent(params.provider)
+    );
 
     return this.oauther
       .exchangeAccessToken(
-        this.providerName,
+        params.provider,
         params.oauth_token,
         params.oauth_verifier
       )
@@ -48,13 +52,16 @@ export default class Oauth1SignInRoute extends Route {
   }
 
   getUserInformation(params) {
-    assert('Please set a providerName.', isPresent(this.providerName));
+    assert(
+      'Please set a provider name in params.provider.',
+      isPresent(params.provider)
+    );
 
     return this.getAccessToken(params)
       .then((tokenData) => {
         return this.oauther
           .exchangeUserInformation(
-            this.providerName,
+            params.provider,
             tokenData.accessToken,
             tokenData.accessTokenSecret
           )
