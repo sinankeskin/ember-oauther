@@ -1,4 +1,5 @@
 import OAuth1Provider from './oauth1';
+import { capitalize } from '@ember/string';
 
 export default class TwitterProvider extends OAuth1Provider {
   get name() {
@@ -6,7 +7,7 @@ export default class TwitterProvider extends OAuth1Provider {
   }
 
   get displayName() {
-    return 'Twitter';
+    return capitalize(this.name);
   }
 
   get _requestTokenEndpoint() {
@@ -22,7 +23,7 @@ export default class TwitterProvider extends OAuth1Provider {
   }
 
   get _userInformationEndpoint() {
-    return `https://api.twitter.com/1.1/account/verify_credentials.json`;
+    return 'https://api.twitter.com/1.1/account/verify_credentials.json';
   }
 
   get optionalParamsForExchangeUserInformation() {
