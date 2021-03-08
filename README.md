@@ -1,6 +1,6 @@
 # ember-oauther
 
-OAuther is a set of providers and routers to connect OAuth 1.0a and OAuth 2.0 services like facebook, google etc.
+OAuther is a set of providers and routes to connect OAuth 1.0a and OAuth 2.0 services like facebook, google etc.
 
 Very similar to Torii but no session manager and no adapter.
 
@@ -183,6 +183,8 @@ export default class Oauth2SignInRoute extends Oauth2CodeSignInRoute {
   }
 }
 ```
+
+For dummy app: [oauther-test](https://github.com/sinankeskin/oauther-test)
 
 ## Contributing
 
