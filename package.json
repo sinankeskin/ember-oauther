@@ -1,13 +1,18 @@
 {
   "name": "ember-oauther",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember OAuther is a set of providers and routers to connect OAuth 1.0a and OAuth 2.0 services like facebook, google etc.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "oauth",
+    "oauth 1.0a",
+    "oauth 2.0",
+    "auth",
+    "authenticator"
   ],
-  "repository": "",
+  "repository": "https://github.com/sinankeskin/ember-oauther",
   "license": "MIT",
-  "author": "",
+  "author": "Sinan Keskin <sinan@kesk.in> (https://kesk.in)",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -21,9 +26,12 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
+    "deploy": "npm version patch && git push && git push origin --tags && npm publish",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember-compatibility": "ember try:each",
+    "update": "ncu -u && npm install && npm run lint && git commit -am 'Update some packages' && git push",
+    "update:all": "run-s update deploy"
   },
   "dependencies": {
     "ember-auto-import": "^1.10.1",
