@@ -96,6 +96,66 @@ ENV['ember-oauther'] = {
   }
 ```
 
+ember-outher has a service named oauther.
+
+For sign in process use;
+
+```javascript
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+
+export default class LoginController extends Controller {
+  @service
+  oauther;
+
+  @action
+  signIn(providerName) {
+    this.oauther.signIn(providerName);
+  }
+}
+```
+
+For exchange token process use;
+
+```javascript
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+
+export default class LoginController extends Controller {
+  @service
+  oauther;
+
+  @action
+  exchangeAccessToken(providerName, codeOrToken, verifier) {
+    this.oauther.exchangeAccessToken(providerName, codeOrToken, verifier);
+  }
+}
+```
+
+For exchange user information use;
+
+```javascript
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+
+export default class LoginController extends Controller {
+  @service
+  oauther;
+
+  @action
+  exchangeUserInformation(providerName, accessToken, accessTokenSecret) {
+    this.oauther.exchangeUserInformation(
+      providerName,
+      accessToken,
+      accessTokenSecret
+    );
+  }
+}
+```
+
 ember-oauther also provides 2 routes for redirection routes. Oauth1SignInRoute (twitter) and Oauth2CodeSignInRoute.
 
 Routes has 2 helper functions. getAccessToken and getUserInformation. Both functions takes params which also inherited from super.
