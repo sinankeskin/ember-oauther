@@ -96,6 +96,42 @@ ENV['ember-oauther'] = {
   }
 ```
 
+If you want to open a opup window instead of redirection add `popup: true` to env. For example;
+
+```javascript
+ENV['ember-oauther'] = {
+  popup: true,
+  // for popupOptions: https://developer.mozilla.org/en-US/docs/Web/API/Window/open#window_features
+  popupOptions: {
+    width: 640,
+    heigth: 480,
+  },
+};
+```
+
+Or just a single provider;
+
+```javascript
+ENV['ember-oauther'] = {
+  instagram: {
+    popup: true,
+    // for popupOptions: https://developer.mozilla.org/en-US/docs/Web/API/Window/open#window_features
+    popupOptions: {
+      width: 640,
+      heigth: 480,
+    },
+    clientId: '...',
+    clientSecret: '....',
+    redirectUri: 'https://localhost:4200/instagram-sign-in',
+    scope: 'user_profile',
+    fields: 'id,username',
+    tokenEndpoint: {
+      useCorsProxy: true,
+      corsProxyEndpoint: "your cors proxy endpoint"
+    }
+  }
+```
+
 ember-outher has a service named oauther. All functions returns Promise.
 
 For sign in process use;
