@@ -23,8 +23,8 @@ export default class FacebookProvider extends OAuth2CodeProvider {
   }
 
   get _apiVersion() {
-    if (this.getParameter('apiVersion')) {
-      return `/${this.getParameter('apiVersion')}`;
+    if (this.getProviderParameter('apiVersion')) {
+      return `/${this.getProviderParameter('apiVersion')}`;
     }
 
     return '';

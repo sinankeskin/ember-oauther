@@ -30,6 +30,10 @@ export default class Oauth1SignInRoute extends Route {
       )
       .then((response) => {
         if (response.ok) {
+          if (this.oauther.remote && !this.oauther.remote.closed) {
+            this.oauther.remote.close();
+          }
+
           return response.text().then((data) => {
             const query = new URLSearchParams(data);
 

@@ -3,8 +3,12 @@ import { isNone, isPresent } from '@ember/utils';
 import BaseProvider from './base';
 import fetch from 'fetch';
 import forge from 'node-forge';
+import { inject as service } from '@ember/service';
 
 export default class OAuth2CodeProvider extends BaseProvider {
+  @service
+  oauther;
+
   get responseType() {
     return 'code';
   }
@@ -94,15 +98,15 @@ export default class OAuth2CodeProvider extends BaseProvider {
     Object.keys(this.requiredParamsForSignIn).forEach((parameterName) => {
       queryString.append(
         this.requiredParamsForSignIn[parameterName],
-        this.getParameter(parameterName)
+        this.getProviderParameter(parameterName)
       );
     });
 
     Object.keys(this.optionalParamsForSignIn).forEach((parameterName) => {
-      if (isPresent(this.getParameter(parameterName))) {
+      if (isPresent(this.getProviderParameter(parameterName))) {
         queryString.append(
           this.optionalParamsForSignIn[parameterName],
-          this.getParameter(parameterName)
+          this.getProviderParameter(parameterName)
         );
       }
     });
@@ -121,7 +125,28 @@ export default class OAuth2CodeProvider extends BaseProvider {
     try {
       await this.validate(this.requiredParamsForSignIn);
 
-      window.location.replace(this.buildChallengeUrl());
+      if (
+        this.getGlobalParameter('popup') ||
+        this.getProviderParameter('popup')
+      ) {
+        if (this.oauther.remote && !this.oauther.remote.closed) {
+          this.oauther.remote.close();
+        }
+
+        this.oauther.remote = window.open(
+          this.buildChallengeUrl(),
+          'oauth-signin',
+          this.stringifyOptions(
+            this.prepareOptions(
+              this.getGlobalParameter('popupOptions') ||
+                this.getProviderParameter('popupOptions') ||
+                {}
+            )
+          )
+        );
+      } else {
+        window.location.replace(this.buildChallengeUrl());
+      }
     } catch (e) {
       console.error(e);
     }
@@ -137,17 +162,17 @@ export default class OAuth2CodeProvider extends BaseProvider {
         (parameterName) => {
           body.append(
             this.requiredParamsForExchangeAccessToken[parameterName],
-            this.getParameter(parameterName)
+            this.getProviderParameter(parameterName)
           );
         }
       );
 
       Object.keys(this.optionalParamsForExchangeAccessToken).forEach(
         (parameterName) => {
-          if (isPresent(this.getParameter(parameterName))) {
+          if (isPresent(this.getProviderParameter(parameterName))) {
             body.append(
               this.optionalParamsForExchangeAccessToken[parameterName],
-              this.getParameter(parameterName)
+              this.getProviderParameter(parameterName)
             );
           }
         }
@@ -180,17 +205,17 @@ export default class OAuth2CodeProvider extends BaseProvider {
         (parameterName) => {
           queryString.append(
             this.requiredParamsForExchangeUserInformation[parameterName],
-            this.getParameter(parameterName)
+            this.getProviderParameter(parameterName)
           );
         }
       );
 
       Object.keys(this.optionalParamsForExchangeUserInformation).forEach(
         (parameterName) => {
-          if (isPresent(this.getParameter(parameterName))) {
+          if (isPresent(this.getProviderParameter(parameterName))) {
             queryString.append(
               this.optionalParamsForExchangeUserInformation[parameterName],
-              this.getParameter(parameterName)
+              this.getProviderParameter(parameterName)
             );
           }
         }

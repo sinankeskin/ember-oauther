@@ -25,8 +25,8 @@ export default class MicrosoftProvider extends OAuth2CodeProvider {
   }
 
   get _tenantId() {
-    if (this.getParameter('tenantId')) {
-      return this.getParameter('tenantId');
+    if (this.getProviderParameter('tenantId')) {
+      return this.getProviderParameter('tenantId');
     }
 
     return 'common';

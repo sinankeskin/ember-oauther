@@ -2,8 +2,12 @@ import BaseProvider from './base';
 import OAuth from 'oauth-1.0a';
 import forge from 'node-forge';
 import { isPresent } from '@ember/utils';
+import { inject as service } from '@ember/service';
 
 export default class OAuth1Provider extends BaseProvider {
+  @service
+  oauther;
+
   get requiredParamsForSignIn() {
     return {
       consumerKey: 'consumer_key',
@@ -15,8 +19,8 @@ export default class OAuth1Provider extends BaseProvider {
   get oauth() {
     return OAuth({
       consumer: {
-        key: this.getParameter('consumerKey'),
-        secret: this.getParameter('consumerSecret'),
+        key: this.getProviderParameter('consumerKey'),
+        secret: this.getProviderParameter('consumerSecret'),
       },
       signature_method: 'HMAC-SHA1',
       hash_function(base_string, key) {
@@ -36,7 +40,7 @@ export default class OAuth1Provider extends BaseProvider {
       const request = {
         url: this._requestTokenEndpoint,
         method: 'POST',
-        data: { oauth_callback: this.getParameter('redirectUri') },
+        data: { oauth_callback: this.getProviderParameter('redirectUri') },
       };
 
       fetch(this.getEndpoint('requestTokenEndpoint'), {
@@ -49,11 +53,34 @@ export default class OAuth1Provider extends BaseProvider {
               const query = new URLSearchParams(data);
 
               if (query.get('oauth_callback_confirmed')) {
-                window.location.replace(
-                  `${this.getEndpoint('authenticationEndpoint')}${query.get(
-                    'oauth_token'
-                  )}`
-                );
+                if (
+                  this.getGlobalParameter('popup') ||
+                  this.getProviderParameter('popup')
+                ) {
+                  if (this.oauther.remote && !this.oauther.remote.closed) {
+                    this.oauther.remote.close();
+                  }
+
+                  this.oauther.remote = window.open(
+                    `${this.getEndpoint('authenticationEndpoint')}${query.get(
+                      'oauth_token'
+                    )}`,
+                    'oauth-signin',
+                    this.stringifyOptions(
+                      this.prepareOptions(
+                        this.getGlobalParameter('popupOptions') ||
+                          this.getProviderParameter('popupOptions') ||
+                          {}
+                      )
+                    )
+                  );
+                } else {
+                  window.location.replace(
+                    `${this.getEndpoint('authenticationEndpoint')}${query.get(
+                      'oauth_token'
+                    )}`
+                  );
+                }
               } else {
                 console.error('OAuth callback not confirmed');
               }
@@ -85,10 +112,10 @@ export default class OAuth1Provider extends BaseProvider {
 
     Object.keys(this.optionalParamsForExchangeUserInformation).forEach(
       (parameterName) => {
-        if (isPresent(this.getParameter(parameterName))) {
+        if (isPresent(this.getProviderParameter(parameterName))) {
           queryString.append(
             this.optionalParamsForExchangeUserInformation[parameterName],
-            this.getParameter(parameterName)
+            this.getProviderParameter(parameterName)
           );
         }
       }

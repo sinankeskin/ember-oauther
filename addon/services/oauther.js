@@ -2,8 +2,12 @@ import Service from '@ember/service';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { isPresent } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
 export default class OautherService extends Service {
+  @tracked
+  remote;
+
   get owner() {
     return getOwner(this);
   }

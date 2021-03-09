@@ -36,7 +36,7 @@ export default class TwitchProvider extends OAuth2CodeProvider {
   get requiredHeadersForExchangeUserInformation() {
     return {
       ...super.requiredHeadersForExchangeUserInformation,
-      ...{ 'Client-ID': this.getParameter('clientId') },
+      ...{ 'Client-ID': this.getProviderParameter('clientId') },
     };
   }
 }
