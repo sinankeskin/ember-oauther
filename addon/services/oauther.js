@@ -38,6 +38,8 @@ export default class OautherService extends Service {
   popupClose() {
     if (this.remote && !this.remote.closed) {
       this.remote.close();
+    } else {
+      window.close();
     }
   }
 
