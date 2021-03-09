@@ -57,11 +57,7 @@ export default class OAuth1Provider extends BaseProvider {
                   this.getGlobalParameter('popup') ||
                   this.getProviderParameter('popup')
                 ) {
-                  if (this.oauther.remote && !this.oauther.remote.closed) {
-                    this.oauther.remote.close();
-                  }
-
-                  this.oauther.remote = window.open(
+                  this.oauther.popupOpen(
                     `${this.getEndpoint('authenticationEndpoint')}${query.get(
                       'oauth_token'
                     )}`,

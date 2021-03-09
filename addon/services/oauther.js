@@ -30,6 +30,17 @@ export default class OautherService extends Service {
     );
   }
 
+  popupOpen(url, options) {
+    this.popupClose();
+    this.remote = window.open(url, 'oauth-signin', options);
+  }
+
+  popupClose() {
+    if (this.remote && !this.remote.closed) {
+      this.remote.close();
+    }
+  }
+
   _getProvider(providerName) {
     const provider = this.owner.lookup(`oauther-provider:${providerName}`);
 
