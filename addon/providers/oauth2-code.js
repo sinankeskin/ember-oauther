@@ -131,7 +131,6 @@ export default class OAuth2CodeProvider extends BaseProvider {
       ) {
         this.oauther.popupOpen(
           this.buildChallengeUrl(),
-          'oauth-signin',
           this.stringifyOptions(
             this.prepareOptions(
               this.getGlobalParameter('popupOptions') ||

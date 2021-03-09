@@ -61,7 +61,6 @@ export default class OAuth1Provider extends BaseProvider {
                     `${this.getEndpoint('authenticationEndpoint')}${query.get(
                       'oauth_token'
                     )}`,
-                    'oauth-signin',
                     this.stringifyOptions(
                       this.prepareOptions(
                         this.getGlobalParameter('popupOptions') ||
