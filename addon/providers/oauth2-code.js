@@ -1,4 +1,5 @@
 import { isNone, isPresent } from '@ember/utils';
+import { reject, resolve } from '../../node_modules/uri-js/dist/es5/uri.all';
 
 import BaseProvider from './base';
 import fetch from 'fetch';
@@ -125,25 +126,28 @@ export default class OAuth2CodeProvider extends BaseProvider {
     try {
       await this.validate(this.requiredParamsForSignIn);
 
+      const url = this.buildChallengeUrl();
+
       if (
         this.getGlobalParameter('popup') ||
         this.getProviderParameter('popup')
       ) {
-        this.oauther.popupOpen(
-          this.buildChallengeUrl(),
-          this.stringifyOptions(
-            this.prepareOptions(
-              this.getGlobalParameter('popupOptions') ||
-                this.getProviderParameter('popupOptions') ||
-                {}
-            )
+        const options = this.stringifyOptions(
+          this.prepareOptions(
+            this.getGlobalParameter('popupOptions') ||
+              this.getProviderParameter('popupOptions') ||
+              {}
           )
         );
+
+        return this.oauther.popupOpen(url, options);
       } else {
-        window.location.replace(this.buildChallengeUrl());
+        window.location.replace(url);
+
+        return resolve();
       }
     } catch (e) {
-      console.error(e);
+      return reject(e);
     }
   }
 
@@ -184,7 +188,7 @@ export default class OAuth2CodeProvider extends BaseProvider {
         },
       });
     } catch (e) {
-      console.error(e);
+      return reject(e);
     }
   }
 
@@ -229,7 +233,7 @@ export default class OAuth2CodeProvider extends BaseProvider {
         },
       });
     } catch (e) {
-      console.error(e);
+      return reject(e);
     }
   }
 }

@@ -132,25 +132,7 @@ ENV['ember-oauther'] = {
   }
 ```
 
-You can close popup anytime with popupClose method on oauther service.
-
-```javascript
-import Controller from '@ember/controller';
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-
-export default class LoginController extends Controller {
-  @service
-  oauther;
-
-  @action
-  popupClose() {
-    this.oauther.popupClose();
-  }
-}
-```
-
-ember-outher has a service named oauther. All functions returns Promise.
+ember-outher has a service named `oauther`. All functions returns Promise.
 
 For sign in process use;
 
@@ -206,6 +188,24 @@ export default class LoginController extends Controller {
       accessToken,
       accessTokenSecret
     );
+  }
+}
+```
+
+You can close popup anytime with `popupClose` method on oauther service.
+
+```javascript
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+
+export default class LoginController extends Controller {
+  @service
+  oauther;
+
+  @action
+  popupClose() {
+    this.oauther.popupClose();
   }
 }
 ```

@@ -1,3 +1,5 @@
+import { reject, resolve } from 'rsvp';
+
 import BaseProvider from './base';
 import OAuth from 'oauth-1.0a';
 import forge from 'node-forge';
@@ -43,7 +45,7 @@ export default class OAuth1Provider extends BaseProvider {
         data: { oauth_callback: this.getProviderParameter('redirectUri') },
       };
 
-      fetch(this.getEndpoint('requestTokenEndpoint'), {
+      return fetch(this.getEndpoint('requestTokenEndpoint'), {
         method: 'POST',
         headers: this.oauth.toHeader(this.oauth.authorize(request)),
       })
@@ -52,41 +54,40 @@ export default class OAuth1Provider extends BaseProvider {
             response.text().then((data) => {
               const query = new URLSearchParams(data);
 
+              const url = `${this.getEndpoint(
+                'authenticationEndpoint'
+              )}${query.get('oauth_token')}`;
+
               if (query.get('oauth_callback_confirmed')) {
                 if (
                   this.getGlobalParameter('popup') ||
                   this.getProviderParameter('popup')
                 ) {
-                  this.oauther.popupOpen(
-                    `${this.getEndpoint('authenticationEndpoint')}${query.get(
-                      'oauth_token'
-                    )}`,
-                    this.stringifyOptions(
-                      this.prepareOptions(
-                        this.getGlobalParameter('popupOptions') ||
-                          this.getProviderParameter('popupOptions') ||
-                          {}
-                      )
+                  const options = this.stringifyOptions(
+                    this.prepareOptions(
+                      this.getGlobalParameter('popupOptions') ||
+                        this.getProviderParameter('popupOptions') ||
+                        {}
                     )
                   );
+
+                  return this.oauther.popupOpen(url, options);
                 } else {
-                  window.location.replace(
-                    `${this.getEndpoint('authenticationEndpoint')}${query.get(
-                      'oauth_token'
-                    )}`
-                  );
+                  window.location.replace(url);
+
+                  return resolve();
                 }
               } else {
-                console.error('OAuth callback not confirmed');
+                return reject('OAuth callback not confirmed');
               }
             });
           }
         })
         .catch((e) => {
-          console.error(e);
+          return reject(e);
         });
     } catch (e) {
-      console.error(e);
+      return reject(e);
     }
   }
 

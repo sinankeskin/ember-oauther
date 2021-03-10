@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { isPresent } from '@ember/utils';
+import { resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 
 export default class OautherService extends Service {
@@ -33,6 +34,8 @@ export default class OautherService extends Service {
   popupOpen(url, options) {
     this.popupClose();
     this.remote = window.open(url, 'oauth-signin', options);
+
+    return resolve();
   }
 
   popupClose() {
@@ -41,6 +44,8 @@ export default class OautherService extends Service {
     } else {
       window.close();
     }
+
+    return resolve();
   }
 
   _getProvider(providerName) {
