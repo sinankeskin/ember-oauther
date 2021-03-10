@@ -14,18 +14,18 @@ export default class OautherService extends Service {
   }
 
   signIn(providerName) {
-    return this._getProvider(providerName).signIn();
+    return this.getProvider(providerName).signIn();
   }
 
   exchangeAccessToken(providerName, codeOrToken, verifier) {
-    return this._getProvider(providerName).exchangeAccessToken(
+    return this.getProvider(providerName).exchangeAccessToken(
       codeOrToken,
       verifier
     );
   }
 
   exchangeUserInformation(providerName, accessToken, accessTokenSecret) {
-    return this._getProvider(providerName).exchangeUserInformation(
+    return this.getProvider(providerName).exchangeUserInformation(
       accessToken,
       accessTokenSecret
     );
@@ -48,7 +48,7 @@ export default class OautherService extends Service {
     return resolve();
   }
 
-  _getProvider(providerName) {
+  getProvider(providerName) {
     const provider = this.owner.lookup(`oauther-provider:${providerName}`);
 
     assert(`${providerName} provider not found.`, isPresent(provider));
