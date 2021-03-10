@@ -1,5 +1,5 @@
 import { isNone, isPresent } from '@ember/utils';
-import { reject, resolve } from '../../node_modules/uri-js/dist/es5/uri.all';
+import { reject, resolve } from 'rsvp';
 
 import BaseProvider from './base';
 import fetch from 'fetch';
