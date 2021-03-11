@@ -21,9 +21,9 @@ ember install ember-oauther
 OAuth 1.0a is a 4 step process. Some steps in some providers are not allowed to use in clients (CORS).
 Which this is understandable because client secret must be secret. Clients are not a good place for this.
 
-| Provider | Request Token (requestTokenEndpoint) | Authentication (authenticationEndpoint) | Access Token(accessTokenEndpoint) | User Information (userInformationEndpoint) |
-| -------- | ------------------------------------ | --------------------------------------- | --------------------------------- | ------------------------------------------ |
-| Twitter  | :x:                                  | :heavy_check_mark:                      | :x:                               | :x:                                        |
+| Provider | Request Token (requestTokenEndpoint) | Authentication (authenticationEndpoint) | Access Token (accessTokenEndpoint) | User Information (userInformationEndpoint) |
+| -------- | ------------------------------------ | --------------------------------------- | ---------------------------------- | ------------------------------------------ |
+| Twitter  | :x:                                  | :heavy_check_mark:                      | :x:                                | :x:                                        |
 
 Oauth 2.0 is a 3 step process. Some steps in some providers are not allowed to use in clients (CORS).
 Which this is understandable because client secret must be secret. Clients are not a good place for this.
@@ -40,12 +40,12 @@ Which this is understandable because client secret must be secret. Clients are n
 | Twitch        | :heavy_check_mark:                    | :heavy_check_mark:           | :heavy_check_mark:                         |
 | StackExchange | :heavy_check_mark:                    | :x:                          | :x:                                        |
 
-All required parameters should be in environment with a name 'ember-oauther'.
+All required parameters should be in environment with a name `ember-oauther`.
 
 If you are seeing :x: in the provider line that you want to use and it's ok to send client secret in plain text.
 You have 3 options;
 
-1. Set your own endpoint url. For example:
+1. Set your own endpoint `url`. For example:
 
 ```javascript
 ENV['ember-oauther'] = {
@@ -61,7 +61,7 @@ ENV['ember-oauther'] = {
   }
 ```
 
-2. Use useCorsProxy parameter without corsProxyEndpoint parameter. For example:
+2. Use `useCorsProxy` parameter without `corsProxyEndpoint` parameter. For example:
 
 ```javascript
 ENV['ember-oauther'] = {
@@ -79,7 +79,7 @@ ENV['ember-oauther'] = {
 
 By default it will use `https://cors-anywhere.herokuapp.com`.
 
-3. Use useCorsProxy parameter with corsProxyEndpoint parameter. For example:
+3. Use `useCorsProxy` parameter with `corsProxyEndpoint` parameter. For example:
 
 ```javascript
 ENV['ember-oauther'] = {
@@ -109,7 +109,7 @@ ENV['ember-oauther'] = {
 };
 ```
 
-Or just a single provider;
+Or just for a single provider;
 
 ```javascript
 ENV['ember-oauther'] = {
@@ -210,9 +210,9 @@ export default class LoginController extends Controller {
 }
 ```
 
-ember-oauther also provides 2 routes for redirection routes. Oauth1SignInRoute (twitter) and Oauth2CodeSignInRoute.
+ember-oauther also provides 2 routes for redirection routes. `Oauth1SignInRoute` (just twitter for now) and `Oauth2CodeSignInRoute`.
 
-Routes has 2 helper functions. getAccessToken and getUserInformation.
+Routes has 2 helper functions. `getAccessToken` and `getUserInformation`.
 Both functions takes params which also inherited from super and returns Promise.
 
 OAuth 1.0a params
@@ -247,6 +247,7 @@ export default class GoogleSignInRoute extends Oauth2CodeSignInRoute {
       console.log(accessToken);
     });
 
+    // getUserInformation calls getAccessToken already, you don't need both. This is for demo purpose.
     this.getUserInformation(params).then((data) => {
       console.log(data);
     });
@@ -258,7 +259,7 @@ Also if you are using ember-simple-auth addon there is a complementary addon cal
 
 It has 3 authenticators.
 
-1. oauther: For whatever you returned.
+1. oauther: For whatever you return json data.
 2. oauther-token: For same token logic with [ember-simple-auth-token](https://github.com/jpadilla/ember-simple-auth-token)
 3. oauther-jwt: For same jwt logic with [ember-simple-auth-token](https://github.com/jpadilla/ember-simple-auth-token)
 
