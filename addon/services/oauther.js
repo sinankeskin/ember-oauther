@@ -41,17 +41,22 @@ export default class OautherService extends Service {
   popupClose() {
     if (this.remote && !this.remote.closed) {
       this.remote.close();
-    } else {
-      window.close();
     }
 
     return resolve();
   }
 
   getProvider(providerName) {
-    const provider = this.owner.lookup(`oauther-provider:${providerName}`);
+    assert(`Plase pass a provider name.`, isPresent(providerName));
 
-    assert(`${providerName} provider not found.`, isPresent(provider));
+    const provider = this.owner.lookup(
+      `oauther-provider:${providerName.toLowerCase()}`
+    );
+
+    assert(
+      `${providerName.toLowerCase()} provider not found.`,
+      isPresent(provider)
+    );
 
     return provider;
   }
