@@ -36,7 +36,7 @@
   "dependencies": {
     "ember-auto-import": "^1.10.1",
     "ember-cached-decorator-polyfill": "^0.1.1",
-    "ember-cli-babel": "^7.26.0",
+    "ember-cli-babel": "^7.26.1",
     "node-forge": "^0.10.0",
     "oauth-1.0a": "^2.2.6"
   },
