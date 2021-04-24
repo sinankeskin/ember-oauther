@@ -34,7 +34,7 @@
     "update:all": "run-s update deploy"
   },
   "dependencies": {
-    "ember-auto-import": "^1.11.2",
+    "ember-auto-import": "^1.11.3",
     "ember-cached-decorator-polyfill": "^0.1.1",
     "ember-cli-babel": "^7.26.3",
     "node-forge": "^0.10.0",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.5",
-    "@embroider/test-setup": "^0.39.1",
+    "@embroider/test-setup": "^0.40.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "babel-eslint": "^10.1.0",
@@ -65,7 +65,7 @@
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^3.2.0",
     "ember-try": "^1.4.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-ember": "^10.4.1",
     "eslint-plugin-node": "^11.1.0",
