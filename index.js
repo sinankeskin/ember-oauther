@@ -15,7 +15,7 @@ module.exports = {
   },
 
   treeForVendor() {
-    const content = `import Ember from 'ember';\nEmber.libraries.register('Ember OAuther', '${version}');`;
+    const content = `Ember.libraries.register('Ember OAuther', '${version}');`;
     const registerVersionTree = writeFile(
       'ember-oauther/register-version.js',
       content
