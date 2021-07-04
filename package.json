@@ -39,12 +39,12 @@
     "node-forge": "^0.10.0",
     "oauth-1.0a": "^2.2.6",
     "tracked-toolbox": "^1.2.3",
-    "webpack": "^5.40.0"
+    "webpack": "^5.42.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.8",
-    "@embroider/test-setup": "^0.42.2",
+    "@embroider/test-setup": "^0.42.3",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "babel-eslint": "^10.1.0",
@@ -66,7 +66,7 @@
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^3.5.0",
     "ember-try": "^1.4.0",
-    "eslint": "^7.29.0",
+    "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^10.5.1",
     "eslint-plugin-node": "^11.1.0",
