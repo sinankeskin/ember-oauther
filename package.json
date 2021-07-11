@@ -39,7 +39,7 @@
     "node-forge": "^0.10.0",
     "oauth-1.0a": "^2.2.6",
     "tracked-toolbox": "^1.2.3",
-    "webpack": "^5.42.0"
+    "webpack": "^5.44.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
