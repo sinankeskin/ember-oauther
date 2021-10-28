@@ -3,7 +3,7 @@ import { reject, resolve } from 'rsvp';
 import EmberObject from '@ember/object';
 import { assert } from '@ember/debug';
 import { assign } from '@ember/polyfills';
-import { cached } from 'tracked-toolbox';
+import { cached } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import { isPresent } from '@ember/utils';
 
