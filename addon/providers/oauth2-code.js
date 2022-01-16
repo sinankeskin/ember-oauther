@@ -16,7 +16,7 @@ export default class OAuth2CodeProvider extends BaseProvider {
 
   get state() {
     if (isNone(this.getCache('state'))) {
-      const bytes = forge.random.getBytes(32);
+      const bytes = forge.random.getBytesSync(32);
 
       this.setCache('state', forge.util.encode64(bytes), 5);
     }
