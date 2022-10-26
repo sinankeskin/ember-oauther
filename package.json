@@ -1,6 +1,6 @@
 {
   "name": "ember-oauther",
-  "version": "2.6.0",
+  "version": "3.0.0",
   "description": "Ember OAuther is a set of providers and routers to connect OAuth 1.0a and OAuth 2.0 services like facebook, google etc.",
   "keywords": [
     "ember-addon",
